@@ -1,5 +1,5 @@
 #include "output.h"
-#include "global.h"
+#include "GLOBAL.h"
 
 /*-------------------------------------------------------*/
 int find_1(void)

@@ -16,7 +16,7 @@ public:
 
     QString displayText ( const QVariant & value, const QLocale & locale ) const;
 
-    QWidget* AddressDelegate::createEditor ( QWidget*, const QStyleOptionViewItem&, const QModelIndex& ) const;
+    QWidget* createEditor ( QWidget*, const QStyleOptionViewItem&, const QModelIndex& ) const;
 
 
 signals:

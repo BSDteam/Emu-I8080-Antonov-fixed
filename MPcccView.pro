@@ -10,6 +10,21 @@ TARGET = MPcccView
 TEMPLATE = app
 
 
+unix:!macx {
+    # Явно указываем пути Qt4
+    INCLUDEPATH = /usr/include/qt4 \
+                  /usr/include/qt4/QtGui \
+                  /usr/include/qt4/QtCore \
+                  /usr/include/qt4/Qt \
+                  $$INCLUDEPATH
+
+    # Убираем пути Qt5 если они есть
+    QMAKE_CXXFLAGS += -I/usr/include/qt4
+
+    # Для линковки
+    LIBS += -L/usr/lib/x86_64-linux-gnu/qt4
+}
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     I8080.cpp \

@@ -17,7 +17,7 @@ public:
 
     QString displayText ( const QVariant & value, const QLocale & locale ) const;
 
-    void InstrDelegate::setModelData(QWidget *editor,
+    void setModelData(QWidget *editor,
     QAbstractItemModel *model, const QModelIndex &index) const;
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,

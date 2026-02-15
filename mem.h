@@ -1,6 +1,6 @@
 #ifndef MEM_H
 #define MEM_H
-#include <Qtgui>
+#include <QtGui>
 #include <QTableWidget>
 #include "mem_cell.h"
 

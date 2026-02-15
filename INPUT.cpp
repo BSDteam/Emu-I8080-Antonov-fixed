@@ -1,6 +1,19 @@
 #include "INPUT.h"
 #include "GLOBAL.h"
 
+
+#ifdef __linux__
+char* strupr(char* str) {
+    char* p = str;
+    while (*p) {
+        *p = toupper(*p);
+        p++;
+    }
+    return str;
+}
+#define _strupr strupr  // Создаем макрос, чтобы заменить _strupr на strupr
+#endif
+
 //---------------------------------------------------------------------------
 int strfind(char *str1,char *str2)
 {
