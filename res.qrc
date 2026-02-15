@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>about.png</file>
+        <file>info.png</file>
+        <file>save.png</file>
+        <file>Add.png</file>
+        <file>exit.png</file>
+        <file>table.png</file>
+        <file>open.png</file>
+        <file>reset.png</file>
+        <file>step.png</file>
+        <file>stop.png</file>
+        <file>run.png</file>
+        <file>go.png</file>
+        <file>search.png</file>
+        <file>up.png</file>
+        <file>down.png</file>
+        <file>I80.ico</file>
+        <file>clear.png</file>
+        <file>screen.png</file>
+        <file>ascii.png</file>
+        <file>intel.png</file>
+        <file>sfu.png</file>
+        <file>Icon1.ico</file>
+    </qresource>
+</RCC>
