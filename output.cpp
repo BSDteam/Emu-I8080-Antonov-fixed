@@ -185,7 +185,7 @@ void show_regis(void)
  put_hex4(processor->IP);
 
  //gotoxy(33,12);
- printf("°°°°°°°°°°");
+ printf("â–‘â–‘â–‘â–‘â–‘â–‘â–‘â–‘â–‘â–‘");
  //gotoxy(33,13);
  printf("  FLAGS  ");
  //gotoxy(33,14);
@@ -213,7 +213,7 @@ void show_virtual_screen(void)
 // prik(16 ,59,"    $",(3<<4)|15);
 // prik(17 ,50,"                      $",(3<<4)|15);
 
-//  make_wind(4,44,12,34,15,'°',5);
+//  make_wind(4,44,12,34,15,'â–‘',5);
 //  make_wind(5,45,10,32,0,' ',0);
 
  unsigned int VMP=0x0800;

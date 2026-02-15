@@ -10,19 +10,14 @@ TARGET = MPcccView
 TEMPLATE = app
 
 
+CODECFORTR = UTF-8
+CODECFORSRC = UTF-8
+
+QMAKE_CXXFLAGS += -finput-charset=UTF-8 -fexec-charset=UTF-8
+
 unix:!macx {
-    # Явно указываем пути Qt4
-    INCLUDEPATH = /usr/include/qt4 \
-                  /usr/include/qt4/QtGui \
-                  /usr/include/qt4/QtCore \
-                  /usr/include/qt4/Qt \
-                  $$INCLUDEPATH
-
-    # Убираем пути Qt5 если они есть
-    QMAKE_CXXFLAGS += -I/usr/include/qt4
-
-    # Для линковки
-    LIBS += -L/usr/lib/x86_64-linux-gnu/qt4
+    # Путь к библиотекам относительно бинарника
+    QMAKE_LFLAGS += -Wl,-rpath,\'\$\$ORIGIN\'
 }
 
 SOURCES += main.cpp\

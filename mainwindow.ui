@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>971</width>
+    <width>1052</width>
     <height>543</height>
    </rect>
   </property>
@@ -454,11 +454,11 @@
             <attribute name="horizontalHeaderHighlightSections">
              <bool>false</bool>
             </attribute>
-            <attribute name="verticalHeaderHighlightSections">
-             <bool>false</bool>
-            </attribute>
             <attribute name="verticalHeaderMinimumSectionSize">
              <number>19</number>
+            </attribute>
+            <attribute name="verticalHeaderHighlightSections">
+             <bool>false</bool>
             </attribute>
             <column>
              <property name="text">
@@ -552,8 +552,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>971</width>
-     <height>21</height>
+     <width>1052</width>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">

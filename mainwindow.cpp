@@ -21,11 +21,11 @@ MainWindow::MainWindow(QWidget *parent) :
     aboutvs.setWindowIcon(QIcon(":img/screen.png"));
     ascii.setWindowIcon(QIcon(":img/ascii.png"));
 
-    //создаем папку docs  если она не создана
+    //СЃРѕР·РґР°РµРј РїР°РїРєСѓ docs  РµСЃР»Рё РѕРЅР° РЅРµ СЃРѕР·РґР°РЅР°
     QDir dir;
     dir.mkdir("docs");
 
-    //ассоцируем файлы (Не работает)
+    //Р°СЃСЃРѕС†РёСЂСѓРµРј С„Р°Р№Р»С‹ (РќРµ СЂР°Р±РѕС‚Р°РµС‚)
     QCheckBox * associate=new QCheckBox;
     #ifdef Q_WS_WIN
     {
@@ -47,11 +47,11 @@ MainWindow::MainWindow(QWidget *parent) :
     IsEditInstr=false;
     IsInput=false;
 
-    this->setWindowTitle(QObject::tr("Emu I8080 - обучающая программа"));
+    this->setWindowTitle(QObject::trUtf8("Emu I8080 - РѕР±СѓС‡Р°СЋС‰Р°СЏ РїСЂРѕРіСЂР°РјРјР°"));
     this->setWindowIcon(QIcon(":img/prog.ico"));
     this->setFixedSize(this->size());
 
-    //настройка модели
+    //РЅР°СЃС‚СЂРѕР№РєР° РјРѕРґРµР»Рё
     model=new QStandardItemModel();
     GL_MODEL=model;
     model->setHorizontalHeaderLabels(
@@ -107,6 +107,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->action_2,SIGNAL(triggered()),this,SLOT(open()));
     connect(ui->action_3,SIGNAL(triggered()),this,SLOT(save()));
     connect(ui->action_4,SIGNAL(triggered()),this,SLOT(save_as()));
+    connect(ui->action_5,SIGNAL(triggered()),this,SLOT(AboutCommands()));
     connect(ui->action_19,SIGNAL(triggered()),this,SLOT(close()));
 
     connect(ui->action_7,SIGNAL(triggered()),this,SLOT(AboutProgramm()));
@@ -135,7 +136,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
     return false;
   }
 
-//ассоциация
+//Р°СЃСЃРѕС†РёР°С†РёСЏ
 void MainWindow::slotAssociate(int state)
 {
 #ifdef Q_WS_WIN
@@ -151,29 +152,37 @@ void MainWindow::slotAssociate(int state)
 }
 
 
-//перегружаем событие закрытия окна
+//РїРµСЂРµРіСЂСѓР¶Р°РµРј СЃРѕР±С‹С‚РёРµ Р·Р°РєСЂС‹С‚РёСЏ РѕРєРЅР°
 void MainWindow::closeEvent(QCloseEvent *p)
 {
-    if(QMessageBox::warning(this,
-                         QObject::tr("Предупреждение"),
-                         QObject::tr("Вы уверены что хотите закрыть программу?"),
-                         QMessageBox::Ok|QMessageBox::Cancel
-                         )
-            !=QMessageBox::Ok)//если в диалоговом окне не была нажата кнопка Ok
+    QMessageBox msgBox;
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.setWindowTitle(trUtf8("РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ"));
+    msgBox.setText(trUtf8("Р’С‹ СѓРІРµСЂРµРЅС‹ С‡С‚Рѕ С…РѕС‚РёС‚Рµ Р·Р°РєСЂС‹С‚СЊ РїСЂРѕРіСЂР°РјРјСѓ?"));
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    if(
+        // QMessageBox::warning(this,
+        //                  QObject::tr("РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ"),
+        //                  QObject::tr("Р’С‹ СѓРІРµСЂРµРЅС‹ С‡С‚Рѕ С…РѕС‚РёС‚Рµ Р·Р°РєСЂС‹С‚СЊ РїСЂРѕРіСЂР°РјРјСѓ?"),
+        //                  QMessageBox::Ok|QMessageBox::Cancel
+        //                  )
+        //     !=QMessageBox::Ok
+        msgBox.exec() !=QMessageBox::Ok
+        )//РµСЃР»Рё РІ РґРёР°Р»РѕРіРѕРІРѕРј РѕРєРЅРµ РЅРµ Р±С‹Р»Р° РЅР°Р¶Р°С‚Р° РєРЅРѕРїРєР° Ok
     p->ignore();
     IsRun=false;
 }
 
 
-//открытие файла
+//РѕС‚РєСЂС‹С‚РёРµ С„Р°Р№Р»Р°
 void MainWindow::open()
 {
     this->setEnabled(false);
     QString filename = QFileDialog::getOpenFileName(
                                                     this,
-                                                    tr("Открыть файл..."),
+                                                    trUtf8("РћС‚РєСЂС‹С‚СЊ С„Р°Р№Р»..."),
                                                     QDir::currentPath()+"/docs/",
-                                                    tr("Программа I8080 (*.I80)")
+                                                    trUtf8("РџСЂРѕРіСЂР°РјРјР° I8080 (*.I80)")
                                                     );
     if (filename=="")
     {
@@ -210,7 +219,7 @@ void MainWindow::open()
     this->setEnabled(true);
 }
 
-//сохранить файл
+//СЃРѕС…СЂР°РЅРёС‚СЊ С„Р°Р№Р»
 void MainWindow::save()
 {
     this->setEnabled(false);
@@ -237,14 +246,14 @@ void MainWindow::save()
     file.close();
 
     QMessageBox::about(this,
-                       QObject::tr("Выполнено"),
-                       QObject::tr("Сохранение выполнено успешно...")
+                       QObject::trUtf8("Р’С‹РїРѕР»РЅРµРЅРѕ"),
+                       QObject::trUtf8("РЎРѕС…СЂР°РЅРµРЅРёРµ РІС‹РїРѕР»РЅРµРЅРѕ СѓСЃРїРµС€РЅРѕ...")
                        );
 
    this->setEnabled(true);
 }
 
-//задать для регистров и флагов значение по умолчанию
+//Р·Р°РґР°С‚СЊ РґР»СЏ СЂРµРіРёСЃС‚СЂРѕРІ Рё С„Р»Р°РіРѕРІ Р·РЅР°С‡РµРЅРёРµ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 void MainWindow::SetDefaultRegistr()
 {
     ui->tableWidget_3->item(0,1)->setText("0");
@@ -261,7 +270,7 @@ void MainWindow::SetDefaultRegistr()
     ui->tableWidget_2->item(3,1)->setText("0");
 }
 
-//очистить видио память
+//РѕС‡РёСЃС‚РёС‚СЊ РІРёРґРёРѕ РїР°РјСЏС‚СЊ
 void MainWindow::ClearVideoMem()
 {
     QString code="00";
@@ -272,7 +281,7 @@ void MainWindow::ClearVideoMem()
 
 }
 
-//изменить цвет фона ячеек
+//РёР·РјРµРЅРёС‚СЊ С†РІРµС‚ С„РѕРЅР° СЏС‡РµРµРє
 void MainWindow::ChangeBgVideoMem()
 {
     QColor bg;
@@ -288,15 +297,15 @@ void MainWindow::ChangeBgVideoMem()
 }
 
 
-//сохранить файл как
+//СЃРѕС…СЂР°РЅРёС‚СЊ С„Р°Р№Р» РєР°Рє
 void MainWindow::save_as()
 {
 
  QString   file_name_tmp = QFileDialog::getSaveFileName(
                                                     this,
-                tr("Сохранить файл..."),
+                trUtf8("РЎРѕС…СЂР°РЅРёС‚СЊ С„Р°Р№Р»..."),
                 QDir::currentPath()+"/docs/",
-                tr("Программа I8080 (*.I80)")
+                trUtf8("РџСЂРѕРіСЂР°РјРјР° I8080 (*.I80)")
             );
     if (file_name_tmp=="")return;
 
@@ -317,16 +326,16 @@ void MainWindow::UpTime()
 
 }
 
-//Мы Можем Многое
+//РњС‹ РњРѕР¶РµРј РњРЅРѕРіРѕРµ
 void MainWindow::MMM(QModelIndex a,QModelIndex b)
 {
-    //если изменилась ячейка VS
+    //РµСЃР»Рё РёР·РјРµРЅРёР»Р°СЃСЊ СЏС‡РµР№РєР° VS
     if (a.row()>=0x0800&&a.row()<=0x0800+32*10*2-1)
     {
-        //получаем номер ячейки
+        //РїРѕР»СѓС‡Р°РµРј РЅРѕРјРµСЂ СЏС‡РµР№РєРё
         int tmp=a.row()-0x0800;
 
-        //вычисляем ii,jj
+        //РІС‹С‡РёСЃР»СЏРµРј ii,jj
         int ii=(tmp/2)/10;
         int jj=(tmp/2)-ii*10;
 
@@ -348,7 +357,7 @@ void MainWindow::MMM(QModelIndex a,QModelIndex b)
     }
 
 
-    //если редактируем код
+    //РµСЃР»Рё СЂРµРґР°РєС‚РёСЂСѓРµРј РєРѕРґ
     if (a.column()==2&&!IsEditInstr&&!global_flag)
     {
 
@@ -397,10 +406,12 @@ void MainWindow::AboutVSc()
 
 
 
-//утановить IP
+//СѓС‚Р°РЅРѕРІРёС‚СЊ IP
 void MainWindow::SetCurrenRow(unsigned int row)
 {
-    model->setData(model->index(CurrIndex,0),QBrush( Qt::white ),Qt::BackgroundRole );
+    QPalette pal = this->palette();
+
+    model->setData(model->index(CurrIndex,0),QBrush( pal.color(QPalette::Background) ),Qt::BackgroundRole );
     model->setData(model->index(row,0),QBrush( QColor(0,255,0,90) ),Qt::BackgroundRole );
     ui->tableView->setCurrentIndex(model->index(row,0));
     CurrIndex=row;
@@ -409,7 +420,7 @@ void MainWindow::SetCurrenRow(unsigned int row)
 }
 
 
-//переход на ячейку и перенос IP
+//РїРµСЂРµС…РѕРґ РЅР° СЏС‡РµР№РєСѓ Рё РїРµСЂРµРЅРѕСЃ IP
 void MainWindow::Go()
 {
     if (ui->lineEdit->text()=="")return;
@@ -419,7 +430,7 @@ void MainWindow::Go()
         CursorSearch();
 }
 
-//инкремент IP
+//РёРЅРєСЂРµРјРµРЅС‚ IP
 void MainWindow::CursorUp()
 {
     if (CurrIndex-1<0)
@@ -429,7 +440,7 @@ void MainWindow::CursorUp()
 
 }
 
-//декремент IP
+//РґРµРєСЂРµРјРµРЅС‚ IP
 void MainWindow::CursorDown()
 {
     if (CurrIndex+1==256*256)
@@ -439,7 +450,7 @@ void MainWindow::CursorDown()
 
 }
 
-//найти в таблице IP
+//РЅР°Р№С‚Рё РІ С‚Р°Р±Р»РёС†Рµ IP
 void MainWindow::CursorSearch()
 {
     ui->tableView->setCurrentIndex(model->index(CurrIndex,1));
@@ -447,17 +458,25 @@ void MainWindow::CursorSearch()
 }
 
 
-//Резет
+//Р РµР·РµС‚
 void MainWindow::Reset()
 {
     if(IsFinish)
     {
-    if(QMessageBox::warning(this,
-                         QObject::tr("Предупреждение"),
-                         QObject::tr("Вы действительно хотите сбросить данные?"),
-                         QMessageBox::Ok|QMessageBox::Cancel
-                         )
-            !=QMessageBox::Ok)//если в диалоговом окне была нажата кнопка Ok
+        QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setWindowTitle(trUtf8("РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ"));
+        msgBox.setText(trUtf8("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ СЃР±СЂРѕСЃРёС‚СЊ РґР°РЅРЅС‹Рµ?"));
+        msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+        if(
+            // QMessageBox::information(this, // Р”Рћ 2026 Р“РѕРґР° С‚СѓС‚ Р±С‹Р»Рѕ this РІРјРµСЃС‚Рѕ nullptr
+            //              QObject::trUtf8("РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ"),
+            //              QObject::trUtf8("Р’С‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ С…РѕС‚РёС‚Рµ СЃР±СЂРѕСЃРёС‚СЊ РґР°РЅРЅС‹Рµ?"),
+            //              QMessageBox::Ok|QMessageBox::Cancel
+            //              )
+            // !=QMessageBox::Ok
+            // $$ РџРѕС‡РµРјСѓ С‚Рѕ СЌС‚Рѕ СЃРѕРѕР±С‰РµРЅРёРµ РєСЂР°С€РёС‚ РІСЃРµ Рё РІСЃСЏ, СЏ (Р° СЏ Р“РѕРЅС‡Р°СЂРѕРІ) РµРіРѕ РїРµСЂРµРґРµР»Р°Р».
+            msgBox.exec() !=QMessageBox::Ok)//РµСЃР»Рё РІ РґРёР°Р»РѕРіРѕРІРѕРј РѕРєРЅРµ Р±С‹Р»Р° РЅР°Р¶Р°С‚Р° РєРЅРѕРїРєР° Ok
         return;
     }
 
@@ -465,10 +484,10 @@ void MainWindow::Reset()
 
     //VS
     //ui->graphicsView->setFixedSize(ui->graphicsView->size());
-    //ui->tabWidget->setTabText(2,QObject::tr("Графический"));
-    //ui->tabWidget->setTabText(3,QObject::tr("Текстовый 32x10"));
+    //ui->tabWidget->setTabText(2,QObject::tr("Р“СЂР°С„РёС‡РµСЃРєРёР№"));
+    //ui->tabWidget->setTabText(3,QObject::tr("РўРµРєСЃС‚РѕРІС‹Р№ 32x10"));
 
-    //текстовый 32х10
+    //С‚РµРєСЃС‚РѕРІС‹Р№ 32С…10
     ui->tableWidget_4->setColumnCount(32);
     ui->tableWidget_4->setRowCount(10);
     ui->tableWidget_4->verticalHeader()->close();
@@ -495,7 +514,7 @@ void MainWindow::Reset()
 
     QSplashScreen *splash = new QSplashScreen(QPixmap(":/img/sfu.png"));
     splash->setWindowFlags( Qt::ToolTip);
-    splash->showMessage(QObject::tr("<font color=#fff><b>Siberian Federal University</b><br>ISIT<br>Кафедра ВТ, 2013</font><br><br><br><br><br><br><br><br><br><br><font color=#fff><h2>Идет построение таблицы...<h2></font>"),Qt::AlignLeft | Qt::AlignTop, Qt::black);
+    splash->showMessage(QObject::trUtf8("<font color=#fff><b>Siberian Federal University</b><br>ISIT<br>РљР°С„РµРґСЂР° Р’Рў, 2013</font><br><br><br><br><br><br><br><br><br><br><font color=#fff><h2>РРґРµС‚ РїРѕСЃС‚СЂРѕРµРЅРёРµ С‚Р°Р±Р»РёС†С‹...<h2></font>"),Qt::AlignLeft | Qt::AlignTop, Qt::black);
     splash->show();
 
 
@@ -521,12 +540,12 @@ void MainWindow::Reset()
     if (!IsFinish)
     {
 
-        I::sleep(5);
+        I::sleep(2);
     }
     splash->close();
 
     IsReset=true;
-    //таблица с регистрами и флагами
+    //С‚Р°Р±Р»РёС†Р° СЃ СЂРµРіРёСЃС‚СЂР°РјРё Рё С„Р»Р°РіР°РјРё
     ui->tableWidget_3->setItemDelegateForColumn(1,new CodeDelegate(this));
     ui->tableWidget_3->setItemDelegateForColumn(2,new CodeDelegate(this));
 
@@ -541,7 +560,7 @@ void MainWindow::Reset()
 
     ui->tableWidget_3->setRowCount(6);
 
-    //регистр А
+    //СЂРµРіРёСЃС‚СЂ Рђ
     Item = new QTableWidgetItem(QObject::tr("A"));
     Item->setFlags(Qt::NoItemFlags|Qt::ItemIsEnabled);
     ui->tableWidget_3->setItem(0,0,Item);
@@ -681,10 +700,10 @@ void MainWindow::Reset()
 void MainWindow::DisplayCommand(unsigned int index,bool ignore)
 {
 
-    //получаем команду
+    //РїРѕР»СѓС‡Р°РµРј РєРѕРјР°РЅРґСѓ
     int code=processor->memory[index];
 
-    //если это VS
+    //РµСЃР»Рё СЌС‚Рѕ VS
     if (index>=0x0800&&index<=0x0800+32*10*2-1)
     {
         QStandardItem *VsItem= new QStandardItem ( QString("Virtual Screen") );
@@ -698,7 +717,7 @@ void MainWindow::DisplayCommand(unsigned int index,bool ignore)
 
 
 
-    //проверяем команда ли это (если это часть команды то выходим)
+    //РїСЂРѕРІРµСЂСЏРµРј РєРѕРјР°РЅРґР° Р»Рё СЌС‚Рѕ (РµСЃР»Рё СЌС‚Рѕ С‡Р°СЃС‚СЊ РєРѕРјР°РЅРґС‹ С‚Рѕ РІС‹С…РѕРґРёРј)
     if(!ignore&&model->index(index,1).data(Qt::EditRole).toString()==QString("^^^"))
     {
         DisplayCommand(index-1,false);
@@ -708,7 +727,7 @@ void MainWindow::DisplayCommand(unsigned int index,bool ignore)
 
     int len =3;
 
-    //проверяем сколько в ней бит 1,2 или 3
+    //РїСЂРѕРІРµСЂСЏРµРј СЃРєРѕР»СЊРєРѕ РІ РЅРµР№ Р±РёС‚ 1,2 РёР»Рё 3
 
     for (int i=0; i<len_3_count; i++)
     {
@@ -733,7 +752,7 @@ void MainWindow::DisplayCommand(unsigned int index,bool ignore)
     go:
 
 
-    //разблокировка ячеек
+    //СЂР°Р·Р±Р»РѕРєРёСЂРѕРІРєР° СЏС‡РµРµРє
     if (len==1&&model->index(index+1,1).data(Qt::EditRole).toString()==QString("^^^"))
     {
         DisplayCommand(index+1,true);
@@ -751,7 +770,7 @@ void MainWindow::DisplayCommand(unsigned int index,bool ignore)
 
 
 
-    //в зависимости от количества бит обновляем ячейки
+    //РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РєРѕР»РёС‡РµСЃС‚РІР° Р±РёС‚ РѕР±РЅРѕРІР»СЏРµРј СЏС‡РµР№РєРё
     QStandardItem *SItem,*BlockItem;
     QString s1,s2;
 
@@ -816,7 +835,7 @@ void MainWindow::DisplayCommand(unsigned int index,bool ignore)
 
 }
 
-//перевод числа в 16-ричную СС (4 разряда)
+//РїРµСЂРµРІРѕРґ С‡РёСЃР»Р° РІ 16-СЂРёС‡РЅСѓСЋ РЎРЎ (4 СЂР°Р·СЂСЏРґР°)
 QString MainWindow::put_hex4(unsigned int dig)
 {
  QString result,buf;
@@ -832,7 +851,7 @@ QString MainWindow::put_hex4(unsigned int dig)
 }
 
 
-//переводим числа в 16-ричную СС (2 разряда)
+//РїРµСЂРµРІРѕРґРёРј С‡РёСЃР»Р° РІ 16-СЂРёС‡РЅСѓСЋ РЎРЎ (2 СЂР°Р·СЂСЏРґР°)
 QString MainWindow::put_hex2(unsigned int dig)
 {
  QString result,buf;
@@ -843,7 +862,7 @@ QString MainWindow::put_hex2(unsigned int dig)
 
 
 
-//изменяем регистры
+//РёР·РјРµРЅСЏРµРј СЂРµРіРёСЃС‚СЂС‹
 void  MainWindow::EditReg(int row, int column)
 {
 
@@ -890,7 +909,7 @@ void  MainWindow::EditReg(int row, int column)
 
 }
 
-//начали изменять регистры
+//РЅР°С‡Р°Р»Рё РёР·РјРµРЅСЏС‚СЊ СЂРµРіРёСЃС‚СЂС‹
 void  MainWindow::StartEditReg(int row, int column)
 {
     LastString=ui->tableWidget_3->item(row,column)->text();
@@ -947,7 +966,7 @@ void MainWindow::EnebleGroupRun()
 }
 
 
-//изменение флагов
+//РёР·РјРµРЅРµРЅРёРµ С„Р»Р°РіРѕРІ
 void MainWindow::EditFlag(int row, int column)
 {
 
@@ -984,13 +1003,13 @@ void MainWindow::UpdateTimeInfo()
 {
     sec++;
     ui->textBrowser_2->clear();
-    ui->textBrowser_2->insertHtml(QObject::tr("<font color=green><strong>Информация о последнем запуске</strong></font><br>"));
-    ui->textBrowser_2->insertHtml(QObject::tr("<font color=green>Время работы: </font>")+QString::number(sec)+" sec<br>");
-    ui->textBrowser_2->insertHtml(QObject::tr("<font color=green>Выполненные команды:</font> ")+QString::number(step)+"<br>");
+    ui->textBrowser_2->insertHtml(QObject::trUtf8("<font color=green><strong>РРЅС„РѕСЂРјР°С†РёСЏ Рѕ РїРѕСЃР»РµРґРЅРµРј Р·Р°РїСѓСЃРєРµ</strong></font><br>"));
+    ui->textBrowser_2->insertHtml(QObject::trUtf8("<font color=green>Р’СЂРµРјСЏ СЂР°Р±РѕС‚С‹: </font>")+QString::number(sec)+" sec<br>");
+    ui->textBrowser_2->insertHtml(QObject::trUtf8("<font color=green>Р’С‹РїРѕР»РЅРµРЅРЅС‹Рµ РєРѕРјР°РЅРґС‹:</font> ")+QString::number(step)+"<br>");
     QApplication::processEvents();
 }
 
-//останов
+//РѕСЃС‚Р°РЅРѕРІ
 void MainWindow::Stop()
 {
     UpdateTimeInfo();
@@ -1006,7 +1025,7 @@ void MainWindow::Stop()
     EnebleGroupRun();
 }
 
-//запуск
+//Р·Р°РїСѓСЃРє
 void MainWindow::Run()
 {
     sec=0;
@@ -1014,7 +1033,7 @@ void MainWindow::Run()
     QTimer Vp;
 
     DisableGroupRun();
-    //выключаем обновление таблиц
+    //РІС‹РєР»СЋС‡Р°РµРј РѕР±РЅРѕРІР»РµРЅРёРµ С‚Р°Р±Р»РёС†
     ui->tableView->setUpdatesEnabled(false);
     ui->tableWidget_3->setUpdatesEnabled(false);
     ui->tableWidget_2->setUpdatesEnabled(false);
@@ -1034,13 +1053,13 @@ void MainWindow::Run()
             i=0;
         }
 
-        //зацикливаем
+        //Р·Р°С†РёРєР»РёРІР°РµРј
         if (CurrIndex>=256*256-1)SetCurrenRow(0);
 
-        //делаем шаг
+        //РґРµР»Р°РµРј С€Р°Рі
         Step();
 
-        //если останов
+        //РµСЃР»Рё РѕСЃС‚Р°РЅРѕРІ
         if (processor->memory[processor->IP]==0x76)
             Stop();
     }
@@ -1049,10 +1068,10 @@ void MainWindow::Run()
  }
 
 
-//обновить регисты
+//РѕР±РЅРѕРІРёС‚СЊ СЂРµРіРёСЃС‚С‹
 void MainWindow::UpdateRegistrsAndFlags()
 {
-    //регисты
+    //СЂРµРіРёСЃС‚С‹
     ui->tableWidget_3->item(0,1)->setText(QString::number(processor->A,16));
     ui->tableWidget_3->item(1,1)->setText(QString::number(processor->B,16));
     ui->tableWidget_3->item(1,2)->setText(QString::number(processor->C,16));
@@ -1063,14 +1082,14 @@ void MainWindow::UpdateRegistrsAndFlags()
     ui->tableWidget_3->item(4,1)->setText(QString::number(processor->SP,16));
     ui->tableWidget_3->item(5,1)->setText(QString::number(processor->IP,16));
 
-    //флаги
+    //С„Р»Р°РіРё
     ui->tableWidget_2->item(0,1)->setText(QString::number(processor->flag.C));
     ui->tableWidget_2->item(1,1)->setText(QString::number(processor->flag.Z));
     ui->tableWidget_2->item(2,1)->setText(QString::number(processor->flag.P));
     ui->tableWidget_2->item(3,1)->setText(QString::number(processor->flag.S));
 }
 
-//сделать шаг
+//СЃРґРµР»Р°С‚СЊ С€Р°Рі
 void MainWindow::Step()
 {
     step++;
@@ -1081,61 +1100,76 @@ void MainWindow::Step()
 }
 
 
-//если начали изменять флаги
+//РµСЃР»Рё РЅР°С‡Р°Р»Рё РёР·РјРµРЅСЏС‚СЊ С„Р»Р°РіРё
 void MainWindow::StartEditFlag(int row, int column)
 {
     LastString=ui->tableWidget_2->item(row,column)->text();
 }
 
-// о программе
+// Рѕ РїСЂРѕРіСЂР°РјРјРµ
 void MainWindow::AboutProgramm()
 {
     QMessageBox::about(this,
-                       QObject::tr("О программе"),
-                       QObject::tr("Эмулятор  I8080(K580)\nЭта программа является учебной. Разработана студентом кафедры ВТ, Института Космических и Информационных Технологий Сибирского Федерального Университета (ИКИТ СФУ)\nНаучный руководитель: Середкин Вениамин Георгиевич"));
+                       QObject::trUtf8("Рћ РїСЂРѕРіСЂР°РјРјРµ"),
+                       QObject::trUtf8("Р­РјСѓР»СЏС‚РѕСЂ  I8080(K580)\nР­С‚Р° РїСЂРѕРіСЂР°РјРјР° СЏРІР»СЏРµС‚СЃСЏ СѓС‡РµР±РЅРѕР№. Р Р°Р·СЂР°Р±РѕС‚Р°РЅР° СЃС‚СѓРґРµРЅС‚РѕРј РєР°С„РµРґСЂС‹ Р’Рў, РРЅСЃС‚РёС‚СѓС‚Р° РљРѕСЃРјРёС‡РµСЃРєРёС… Рё РРЅС„РѕСЂРјР°С†РёРѕРЅРЅС‹С… РўРµС…РЅРѕР»РѕРіРёР№ РЎРёР±РёСЂСЃРєРѕРіРѕ Р¤РµРґРµСЂР°Р»СЊРЅРѕРіРѕ РЈРЅРёРІРµСЂСЃРёС‚РµС‚Р° (РРљРРў РЎР¤РЈ)\nРќР°СѓС‡РЅС‹Р№ СЂСѓРєРѕРІРѕРґРёС‚РµР»СЊ: РЎРµСЂРµРґРєРёРЅ Р’РµРЅРёР°РјРёРЅ Р“РµРѕСЂРіРёРµРІРёС‡\nР“РѕРЅС‡Р°СЂРѕРІ Р.Р•. РёСЃРїСЂР°РІР»СЏР» Р·РґРµСЃСЊ РѕС€РёР±РєРё РІ 2026 :)"));
 }
 
-//о регистрах
+//Рѕ СЂРµРіРёСЃС‚СЂР°С…
 void MainWindow::AboutReg()
 {
     QMessageBox::about(this,
-                       QObject::tr("Регистры"),
-                       QObject::tr("<b>A</b> – аккумулятор. Все арифметические и логические операции производятся только между A и другими регистрами или между A и байтом непосредственных данных.<hr>")
-                       + QObject::tr("<b>B, C, D, E, H, L</b> – 8-разрядные регистры общего назначения.<hr>")
-                       + QObject::tr("<b>HL</b> – регистровая пара, состоящая из двух 8-разрядных регистров ( H – старший регистр, L – младший), используется для косвенно-регистровой адресации 64 Кбайт памяти.<hr>")
-                       + QObject::tr("<b>DE</b> – часто используемая регистровая пара, поскольку имеется команда обмена содержимым между парами HL и DE .<hr>")
-                        + QObject::tr("<b>IP</b> – счётчик команд, содержит адрес очередной исполняемой команды.<hr>")
-                       + QObject::tr("<b>SP</b> – указатель стека автоматически инкрементируется на 2 при записи пары регистров в стек (отдельный 8-разрядный регистр в стек записать нельзя, только парами) и декрементируется при извлечении из регистровой пары из стека.<hr>")
-                       + QObject::tr("<b>F</b> – регистр флагов. Непосредственно недоступен программисту, но его в составе PSW можно сохранить в стеке, а потом извлечь в другую регистровую пару, если нужно специально установить или проверить нужные флаги.")
+                       QObject::trUtf8("Р РµРіРёСЃС‚СЂС‹"),
+                       QObject::trUtf8("<b>A</b> вЂ“ Р°РєРєСѓРјСѓР»СЏС‚РѕСЂ. Р’СЃРµ Р°СЂРёС„РјРµС‚РёС‡РµСЃРєРёРµ Рё Р»РѕРіРёС‡РµСЃРєРёРµ РѕРїРµСЂР°С†РёРё РїСЂРѕРёР·РІРѕРґСЏС‚СЃСЏ С‚РѕР»СЊРєРѕ РјРµР¶РґСѓ A Рё РґСЂСѓРіРёРјРё СЂРµРіРёСЃС‚СЂР°РјРё РёР»Рё РјРµР¶РґСѓ A Рё Р±Р°Р№С‚РѕРј РЅРµРїРѕСЃСЂРµРґСЃС‚РІРµРЅРЅС‹С… РґР°РЅРЅС‹С….<hr>")
+                       + QObject::trUtf8("<b>B, C, D, E, H, L</b> вЂ“ 8-СЂР°Р·СЂСЏРґРЅС‹Рµ СЂРµРіРёСЃС‚СЂС‹ РѕР±С‰РµРіРѕ РЅР°Р·РЅР°С‡РµРЅРёСЏ.<hr>")
+                       + QObject::trUtf8("<b>HL</b> вЂ“ СЂРµРіРёСЃС‚СЂРѕРІР°СЏ РїР°СЂР°, СЃРѕСЃС‚РѕСЏС‰Р°СЏ РёР· РґРІСѓС… 8-СЂР°Р·СЂСЏРґРЅС‹С… СЂРµРіРёСЃС‚СЂРѕРІ ( H вЂ“ СЃС‚Р°СЂС€РёР№ СЂРµРіРёСЃС‚СЂ, L вЂ“ РјР»Р°РґС€РёР№), РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ РєРѕСЃРІРµРЅРЅРѕ-СЂРµРіРёСЃС‚СЂРѕРІРѕР№ Р°РґСЂРµСЃР°С†РёРё 64 РљР±Р°Р№С‚ РїР°РјСЏС‚Рё.<hr>")
+                       + QObject::trUtf8("<b>DE</b> вЂ“ С‡Р°СЃС‚Рѕ РёСЃРїРѕР»СЊР·СѓРµРјР°СЏ СЂРµРіРёСЃС‚СЂРѕРІР°СЏ РїР°СЂР°, РїРѕСЃРєРѕР»СЊРєСѓ РёРјРµРµС‚СЃСЏ РєРѕРјР°РЅРґР° РѕР±РјРµРЅР° СЃРѕРґРµСЂР¶РёРјС‹Рј РјРµР¶РґСѓ РїР°СЂР°РјРё HL Рё DE .<hr>")
+                        + QObject::trUtf8("<b>IP</b> вЂ“ СЃС‡С‘С‚С‡РёРє РєРѕРјР°РЅРґ, СЃРѕРґРµСЂР¶РёС‚ Р°РґСЂРµСЃ РѕС‡РµСЂРµРґРЅРѕР№ РёСЃРїРѕР»РЅСЏРµРјРѕР№ РєРѕРјР°РЅРґС‹.<hr>")
+                       + QObject::trUtf8("<b>SP</b> вЂ“ СѓРєР°Р·Р°С‚РµР»СЊ СЃС‚РµРєР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё РёРЅРєСЂРµРјРµРЅС‚РёСЂСѓРµС‚СЃСЏ РЅР° 2 РїСЂРё Р·Р°РїРёСЃРё РїР°СЂС‹ СЂРµРіРёСЃС‚СЂРѕРІ РІ СЃС‚РµРє (РѕС‚РґРµР»СЊРЅС‹Р№ 8-СЂР°Р·СЂСЏРґРЅС‹Р№ СЂРµРіРёСЃС‚СЂ РІ СЃС‚РµРє Р·Р°РїРёСЃР°С‚СЊ РЅРµР»СЊР·СЏ, С‚РѕР»СЊРєРѕ РїР°СЂР°РјРё) Рё РґРµРєСЂРµРјРµРЅС‚РёСЂСѓРµС‚СЃСЏ РїСЂРё РёР·РІР»РµС‡РµРЅРёРё РёР· СЂРµРіРёСЃС‚СЂРѕРІРѕР№ РїР°СЂС‹ РёР· СЃС‚РµРєР°.<hr>")
+                       + QObject::trUtf8("<b>F</b> вЂ“ СЂРµРіРёСЃС‚СЂ С„Р»Р°РіРѕРІ. РќРµРїРѕСЃСЂРµРґСЃС‚РІРµРЅРЅРѕ РЅРµРґРѕСЃС‚СѓРїРµРЅ РїСЂРѕРіСЂР°РјРјРёСЃС‚Сѓ, РЅРѕ РµРіРѕ РІ СЃРѕСЃС‚Р°РІРµ PSW РјРѕР¶РЅРѕ СЃРѕС…СЂР°РЅРёС‚СЊ РІ СЃС‚РµРєРµ, Р° РїРѕС‚РѕРј РёР·РІР»РµС‡СЊ РІ РґСЂСѓРіСѓСЋ СЂРµРіРёСЃС‚СЂРѕРІСѓСЋ РїР°СЂСѓ, РµСЃР»Рё РЅСѓР¶РЅРѕ СЃРїРµС†РёР°Р»СЊРЅРѕ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РёР»Рё РїСЂРѕРІРµСЂРёС‚СЊ РЅСѓР¶РЅС‹Рµ С„Р»Р°РіРё.")
 
                        );
 }
 
 
-// о флагах
+// Рѕ С„Р»Р°РіР°С…
 void MainWindow::AboutFlag()
 {
     QMessageBox::about(this,
-                       QObject::tr("Флаги"),
-                       QObject::tr("<b>S</b> – знак <hr>")
-                       +QObject::tr("<b>Z</b> – нуль <hr>")
-                       +QObject::tr("<b>P</b> – чётность <hr>")
-                       +QObject::tr("<b>С</b> – перенос")
+                       QObject::trUtf8("Р¤Р»Р°РіРё"),
+                       QObject::trUtf8("<b>S</b> вЂ“ Р·РЅР°Рє <hr>")
+                       +QObject::trUtf8("<b>Z</b> вЂ“ РЅСѓР»СЊ <hr>")
+                       +QObject::trUtf8("<b>P</b> вЂ“ С‡С‘С‚РЅРѕСЃС‚СЊ <hr>")
+                       +QObject::trUtf8("<b>РЎ</b> вЂ“ РїРµСЂРµРЅРѕСЃ")
+
+                       );
+}
+
+// $$ РѕР± РѕС‚СЃСѓС‚СЃС‚РІРёРё СЃРїСЂР°РІРєРё РїРѕ РєРѕРјР°РЅРґР°Рј
+void MainWindow::AboutCommands()
+{
+    QMessageBox::about(this,
+                       QObject::trUtf8("РЎРїСЂР°РІРєРё С‚СѓС‚ РЅРµС‚"),
+                       QObject::trUtf8("РђРЅС‚РѕРЅРѕРІ Рћ.Р. РїСЂРѕСЃС‚Рѕ <i>Р·Р°Р±С‹Р»</i> СЂР°Р·РјРµСЃС‚РёС‚СЊ СЃРїСЂР°РІРєСѓ С‚СѓС‚<br>")
+                           +QObject::trUtf8("РџРѕ РєСЂР°Р№РЅРµР№ РјРµСЂРµ, СЏ РµРµ РЅРµ РЅР°С€РµР»<br>")
+                           +QObject::trUtf8("РќРѕ РёРЅСЃС‚СЂСѓРєС†РёРё Р·РґРµСЃСЊ РІС‹РіР»СЏРґСЏС‚ С‚Р°Рє<hr>")
+                           +QObject::trUtf8("<b>MVI A,01</b><hr>")
+                            +QObject::trUtf8("РЎС‚Р°РІРёС‚СЃСЏ РїСЂРѕР±РµР» РјРµР¶РґСѓ РєРѕРјР°РЅРґРѕР№ Рё Р°СЂРіСѓРјРµРЅС‚Р°РјРё<br>")
+                            +QObject::trUtf8("РњРµР¶РґСѓ Р°СЂРіСѓРјРµРЅС‚Р°РјРё Р·Р°РїСЏС‚Р°СЏ Р±РµР· РїСЂРѕР±РµР»Р°")
 
                        );
 }
 
 
-//об авторе
+//РѕР± Р°РІС‚РѕСЂРµ
 void MainWindow::AboutAutor()
 {
     QMessageBox::about(this,
-                       QObject::tr("Об авторе"),
-                       QObject::tr("Программу написал студент кафедры ВТ Института Космических и Информационных Технологий Сибирского Федерального Университета (ИКИТ СФУ)\n\tАнтонов О.И.\n\tvk.com/order83\n\ttheorder83@gmail.com\nНаучный руководитель:Середкин В.Г."));
+                       QObject::trUtf8("РћР± Р°РІС‚РѕСЂРµ"),
+                       QObject::trUtf8("РџСЂРѕРіСЂР°РјРјСѓ РЅР°РїРёСЃР°Р» СЃС‚СѓРґРµРЅС‚ РєР°С„РµРґСЂС‹ Р’Рў РРЅСЃС‚РёС‚СѓС‚Р° РљРѕСЃРјРёС‡РµСЃРєРёС… Рё РРЅС„РѕСЂРјР°С†РёРѕРЅРЅС‹С… РўРµС…РЅРѕР»РѕРіРёР№ РЎРёР±РёСЂСЃРєРѕРіРѕ Р¤РµРґРµСЂР°Р»СЊРЅРѕРіРѕ РЈРЅРёРІРµСЂСЃРёС‚РµС‚Р° (РРљРРў РЎР¤РЈ)\n\tРђРЅС‚РѕРЅРѕРІ Рћ.Р.\n\tvk.com/order83\n\ttheorder83@gmail.com\nРќР°СѓС‡РЅС‹Р№ СЂСѓРєРѕРІРѕРґРёС‚РµР»СЊ:РЎРµСЂРµРґРєРёРЅ Р’.Р“.\n\nРСЃРїСЂР°РІР»СЏР» РїСЂРѕРіСЂР°РјРјСѓ Р“РѕРЅС‡Р°СЂРѕРІ Р.Р•. 2026\n tg @Sunrise_ne_yveren"));
 }
 
 
-//деструктор
+//РґРµСЃС‚СЂСѓРєС‚РѕСЂ
 MainWindow::~MainWindow()
 {
     delete ui;

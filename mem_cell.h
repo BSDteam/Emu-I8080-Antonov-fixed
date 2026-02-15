@@ -4,7 +4,7 @@
 class mem_cell
 {
 private:
-    unsigned char *data;//адрес команды (инструкции)
+    unsigned char *data;//Р°РґСЂРµСЃ РєРѕРјР°РЅРґС‹ (РёРЅСЃС‚СЂСѓРєС†РёРё)
 
 public:
     mem_cell();

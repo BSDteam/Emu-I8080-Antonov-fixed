@@ -91,6 +91,7 @@ private slots:
     void AboutFlag();
     void AboutAscii();
     void AboutVSc();
+    void AboutCommands();
     void Go();
     void CursorUp();
     void CursorDown();

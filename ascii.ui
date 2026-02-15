@@ -50,24 +50,15 @@
       <property name="text">
        <string>DEC</string>
       </property>
-      <property name="textAlignment">
-       <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-      </property>
      </column>
      <column>
       <property name="text">
        <string>HEX</string>
       </property>
-      <property name="textAlignment">
-       <set>AlignHCenter|AlignVCenter|AlignCenter</set>
-      </property>
      </column>
      <column>
       <property name="text">
        <string>CHAR</string>
-      </property>
-      <property name="textAlignment">
-       <set>AlignHCenter|AlignVCenter|AlignCenter</set>
       </property>
      </column>
     </widget>

@@ -848,32 +848,32 @@ int MICROPROC::alu(unsigned char code)
     case 0x78: {
 
       A=B;
-        set_flags(A);
+        // set_flags(A);
          IP++;
            }break;
     //mov
     case 0x79: { A=C;
-      set_flags(A);
+      // set_flags(A);
          IP++;
            }break;
     //mov
     case 0x7A: { A=D;
-      set_flags(A);
+      // set_flags(A);
          IP++;
            }break;
     //mov
     case 0x7B: { A=E;
-      set_flags(A);
+      // set_flags(A);
          IP++;
            }break;
     //mov
     case 0x7C: { A=H;
-      set_flags(A);
+      // set_flags(A);
          IP++;
            }break;
     //mov
     case 0x7D: { A=L;
-      set_flags(A);
+      // set_flags(A);
          IP++;
            }break;
     //mov
@@ -881,12 +881,12 @@ int MICROPROC::alu(unsigned char code)
         addr<<=8;
         addr|=L;
         A=memory[addr];
-        set_flags(A);
+        // set_flags(A);
         IP++;
           }break;
     //mov
     case 0x7F: { A=A;
-      set_flags(A);
+      // set_flags(A);
         IP++;
           }break;
 
