@@ -49,7 +49,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setWindowTitle(QObject::trUtf8("Emu I8080 - обучающая программа"));
     this->setWindowIcon(QIcon(":img/prog.ico"));
-    this->setFixedSize(this->size());
 
     //настройка модели
     model=new QStandardItemModel();
@@ -411,7 +410,7 @@ void MainWindow::SetCurrenRow(unsigned int row)
 {
     QPalette pal = this->palette();
 
-    model->setData(model->index(CurrIndex,0),QBrush( pal.color(QPalette::Background) ),Qt::BackgroundRole );
+    model->setData(model->index(CurrIndex,0),QBrush( pal.color(QPalette::Base) ),Qt::BackgroundRole );
     model->setData(model->index(row,0),QBrush( QColor(0,255,0,90) ),Qt::BackgroundRole );
     ui->tableView->setCurrentIndex(model->index(row,0));
     CurrIndex=row;
