@@ -1211,45 +1211,45 @@ int MICROPROC::alu(unsigned char code)
          IP++;
            }break;
     //CMP B
-    case 0xB8: { if (A==B) flag.Z=1;
-         else if(A<B) flag.C=1;
+           case 0xB8: {
+               set_flags(A-B);
          IP++;
            }break;
     //CMP C
-    case 0xB9: { if (A==C) flag.Z=1;
-         else if(A<C) flag.C=1;
+    case 0xB9: {
+            set_flags(A-C);
          IP++;
            }break;
     //CMP D
-    case 0xBA: { if (A==D) flag.Z=1;
-         else if(A<D) flag.C=1;
+    case 0xBA: {
+         set_flags(A-D);
          IP++;
            }break;
     //CMP E
-    case 0xBB: { if (A==E) flag.Z=1;
-         else if(A<E) flag.C=1;
+    case 0xBB: {
+         set_flags(A-E);
          IP++;
            }break;
     //CMP H
-    case 0xBC: { if (A==H) flag.Z=1;
-         else if(A<H) flag.C=1;
+    case 0xBC: {
+         set_flags(A-H);
          IP++;
            }break;
     //CMP L
-    case 0xBD: { if (A==L) flag.Z=1;
-         else if(A<L) flag.C=1;
+    case 0xBD: {
+         set_flags(A-L);
          IP++;
            }break;
     //CMP M
     case 0xBE: { unsigned int addr=H;
          addr<<=8;
          addr|=L;
-         if (A==memory[addr]) flag.Z=1;
-          else if(A<memory[addr]) flag.C=1;
+         set_flags(A-memory[addr]);
          IP++;
            }break;
     //CMP A
-    case 0xBF: { flag.Z=1;
+    case 0xBF: {
+         set_flags(0);
          IP++;
            }break;
     //RNZ

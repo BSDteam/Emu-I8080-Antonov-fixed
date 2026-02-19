@@ -22,8 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ascii.setWindowIcon(QIcon(":img/ascii.png"));
 
     //создаем папку docs  если она не создана
-    QDir dir;
-    dir.mkdir("docs");
+    //QDir dir; $$ НЕ НАДО создавать папку по приколу
+    //dir.mkdir("docs");
 
     //ассоцируем файлы (Не работает)
     QCheckBox * associate=new QCheckBox;
