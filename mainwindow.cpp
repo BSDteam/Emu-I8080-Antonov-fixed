@@ -128,6 +128,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->action_VS,SIGNAL(triggered()),this,SLOT(AboutVSc()));
 
     ui->tableView->installEventFilter(this);
+
+    ui->splitter->setStretchFactor(0,1);
+    ui->splitter->setStretchFactor(1,0);
 }
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
@@ -342,7 +345,7 @@ void MainWindow::MMM(QModelIndex a,QModelIndex b)
         if (tmp%2==0||tmp==0)
         {
             char ch=processor->memory[a.row()];
-            Items[jj][ii].setText(QString::fromLocal8Bit(&ch,1));
+            Items[jj][ii].setText(VSCharEncoder(ch));
         }
         else
         {
@@ -489,27 +492,43 @@ void MainWindow::Reset()
     //текстовый 32х10
     ui->tableWidget_4->setColumnCount(32);
     ui->tableWidget_4->setRowCount(10);
-    ui->tableWidget_4->verticalHeader()->close();
-    ui->tableWidget_4->horizontalHeader()->close();
+    //ui->tableWidget_4->verticalHeader()->close();
+    //ui->tableWidget_4->horizontalHeader()->close();
+
 
     QFont font=Items[0][0].font();
+    //font.setFamily("Courier");
+    ui->tableWidget_4->setFont(font);
     //font.setPointSize(1);
-    for (int i=0; i<10; i++)
-    {
-        for (int j=0; j<32; j++)
+    if (!IsFinish) { // Привязка массива элементов для Virtual Screen нужно проводить лишь единожды
+        for (int i=0; i<10; i++)
         {
-            //Items[i][j].setBackgroundColor(Qt::black);
-           // Items[i][j].setFont(font);
-            ui->tableWidget_4->setItem(i,j,&Items[i][j]);
+            for (int j=0; j<32; j++)
+            {
+                //Items[i][j].setBackgroundColor(Qt::black);
+               // Items[i][j].setFont(font);
+                ui->tableWidget_4->setItem(i,j,&Items[i][j]);
+            }
         }
     }
 
+    QFontMetrics fm = QFontMetrics(font);
+#ifdef Q_WS_X11
+    int charWidth = fm.charWidth(QString::fromUtf8("█"), 0) + 2;
+#else
+    int charWidth = fm.charWidth(QString::fromUtf8("█"), 0) + 6;
+#endif
+    int charHeight = fm.height();
+
     for (int j=0; j<32; j++)
-        ui->tableWidget_4->setColumnWidth(j,15);
+        ui->tableWidget_4->setColumnWidth(j,charWidth);
 
     for (int j=0; j<10; j++)
-        ui->tableWidget_4->setRowHeight(j,15);
+        ui->tableWidget_4->setRowHeight(j,charHeight);
+    QSize size = QSize(charWidth*32, charHeight*10);
+    ui->tableWidget_4->setFixedSize(size);
 
+    ui->tableWidget_4->updateGeometry();
 
     QSplashScreen *splash = new QSplashScreen(QPixmap(":/img/sfu.png"));
     splash->setWindowFlags( Qt::ToolTip);
@@ -1110,7 +1129,7 @@ void MainWindow::AboutProgramm()
 {
     QMessageBox::about(this,
                        QObject::trUtf8("О программе"),
-                       QObject::trUtf8("Эмулятор  I8080(K580)\nЭта программа является учебной. Разработана студентом кафедры ВТ, Института Космических и Информационных Технологий Сибирского Федерального Университета (ИКИТ СФУ)\nНаучный руководитель: Середкин Вениамин Георгиевич\nГончаров И.Е. исправлял здесь ошибки в 2026 :)"));
+                       QObject::trUtf8("Эмулятор  I8080(K580)\nРевизия 1.3\nЭта программа является учебной. Разработана студентом кафедры ВТ, Института Космических и Информационных Технологий Сибирского Федерального Университета (ИКИТ СФУ)\nНаучный руководитель: Середкин Вениамин Георгиевич\nГончаров И.Е. исправлял здесь ошибки в 2026 :)"));
 }
 
 //о регистрах

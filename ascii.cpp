@@ -23,7 +23,7 @@ Ascii::Ascii(QWidget *parent) :
     {
         ui->tableWidget->setRowHeight(i,50);
 
-        QTableWidgetItem *Item=new QTableWidgetItem (QString(QString(ch).toAscii()));
+        QTableWidgetItem *Item=new QTableWidgetItem (VSCharEncoder(ch));
         ch++;
         QFont font=Item->font();
         font.setPointSize(15);

@@ -21,6 +21,7 @@ unix:!macx {
 }
 
 SOURCES += main.cpp\
+    VSCharEncoder.cpp \
         mainwindow.cpp \
     I8080.cpp \
     LineEditBool.cpp \
@@ -40,6 +41,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     I8080.h \
     LineEditBool.h \
+    VSCharEncoder.h \
     lineedithex.h \
     GLOBAL.h \
     INPUT.h \

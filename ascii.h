@@ -2,6 +2,7 @@
 #define ASCII_H
 
 #include <QDialog>
+#include "VSCharEncoder.h"
 
 namespace Ui {
 class Ascii;

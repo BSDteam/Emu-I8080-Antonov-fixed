@@ -14,11 +14,38 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <item>
+     <widget class="QSplitter" name="splitter">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="opaqueResize">
+       <bool>true</bool>
+      </property>
+      <property name="handleWidth">
+       <number>4</number>
+      </property>
+      <property name="childrenCollapsible">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="layoutWidget">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
@@ -50,6 +77,24 @@
         </item>
         <item>
          <widget class="QTableView" name="tableView">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>100</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>600</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
@@ -185,11 +230,35 @@
          </layout>
         </item>
        </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0">
+        <property name="spacing">
+         <number>6</number>
+        </property>
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
         <item>
          <widget class="QTabWidget" name="tabWidget">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>4000</width>
+            <height>4000</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>200</width>
+            <height>200</height>
+           </size>
+          </property>
           <property name="currentIndex">
            <number>1</number>
           </property>
@@ -230,20 +299,20 @@
             <item row="0" column="0" colspan="2">
              <widget class="QTableWidget" name="tableWidget_4">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
               <property name="minimumSize">
                <size>
-                <width>495</width>
+                <width>384</width>
                 <height>160</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>495</width>
+                <width>384</width>
                 <height>160</height>
                </size>
               </property>
@@ -311,6 +380,12 @@
                 </disabled>
                </palette>
               </property>
+              <property name="font">
+               <font>
+                <family>Courier 10 Pitch</family>
+                <bold>true</bold>
+               </font>
+              </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
               </property>
@@ -322,6 +397,12 @@
               </property>
               <property name="lineWidth">
                <number>0</number>
+              </property>
+              <property name="verticalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOff</enum>
+              </property>
+              <property name="horizontalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOff</enum>
               </property>
               <property name="autoScroll">
                <bool>false</bool>
@@ -373,17 +454,17 @@
               </attribute>
              </widget>
             </item>
-            <item row="1" column="0">
-             <widget class="QPushButton" name="pushButton_6">
-              <property name="text">
-               <string>Очистить видеопамять</string>
-              </property>
-             </widget>
-            </item>
             <item row="1" column="1">
              <widget class="QPushButton" name="pushButton_7">
               <property name="text">
                <string>Черный/белый</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QPushButton" name="pushButton_6">
+              <property name="text">
+               <string>Очистить видеопамять</string>
               </property>
              </widget>
             </item>
@@ -409,12 +490,39 @@
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetDefaultConstraint</enum>
+          </property>
           <item>
            <widget class="QTableWidget" name="tableWidget_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
-              <width>219</width>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>400</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="sizeIncrement">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>200</width>
               <height>0</height>
              </size>
             </property>
@@ -479,10 +587,28 @@
           </item>
           <item>
            <widget class="QTableWidget" name="tableWidget_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>100</width>
               <height>200</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>400</width>
+              <height>2500</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
              </size>
             </property>
             <property name="frameShadow">
@@ -542,8 +668,8 @@
          </layout>
         </item>
        </layout>
-      </item>
-     </layout>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -553,7 +679,7 @@
      <x>0</x>
      <y>0</y>
      <width>1052</width>
-     <height>30</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -601,6 +727,9 @@
    <addaction name="menu_4"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <attribute name="toolBarArea">
     <enum>BottomToolBarArea</enum>
    </attribute>
@@ -842,65 +971,17 @@
  </resources>
  <connections>
   <connection>
-   <sender>tableWidget_3</sender>
-   <signal>cellChanged(int,int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>EditReg(int,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>482</x>
-     <y>329</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>426</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tableWidget_3</sender>
+   <sender>tableWidget_2</sender>
    <signal>cellDoubleClicked(int,int)</signal>
    <receiver>MainWindow</receiver>
-   <slot>StartEditReg(int,int)</slot>
+   <slot>StartEditFlag(int,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>528</x>
-     <y>336</y>
+     <x>717</x>
+     <y>365</y>
     </hint>
     <hint type="destinationlabel">
-     <x>555</x>
-     <y>427</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tableWidget_3</sender>
-   <signal>cellPressed(int,int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>StartEditReg(int,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>503</x>
-     <y>352</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>501</x>
-     <y>428</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tableWidget_3</sender>
-   <signal>cellActivated(int,int)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>StartEditReg(int,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>614</x>
-     <y>382</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>631</x>
+     <x>721</x>
      <y>429</y>
     </hint>
    </hints>
@@ -922,34 +1003,50 @@
    </hints>
   </connection>
   <connection>
-   <sender>tableWidget_2</sender>
+   <sender>tableWidget_3</sender>
    <signal>cellDoubleClicked(int,int)</signal>
    <receiver>MainWindow</receiver>
-   <slot>StartEditFlag(int,int)</slot>
+   <slot>StartEditReg(int,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>717</x>
-     <y>365</y>
+     <x>528</x>
+     <y>336</y>
     </hint>
     <hint type="destinationlabel">
-     <x>721</x>
+     <x>555</x>
+     <y>427</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tableWidget_3</sender>
+   <signal>cellActivated(int,int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>StartEditReg(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>614</x>
+     <y>382</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>631</x>
      <y>429</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_4</sender>
-   <signal>clicked()</signal>
+   <sender>tableWidget_3</sender>
+   <signal>cellPressed(int,int)</signal>
    <receiver>MainWindow</receiver>
-   <slot>Go()</slot>
+   <slot>StartEditReg(int,int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>356</x>
-     <y>52</y>
+     <x>503</x>
+     <y>352</y>
     </hint>
     <hint type="destinationlabel">
-     <x>218</x>
-     <y>59</y>
+     <x>501</x>
+     <y>428</y>
     </hint>
    </hints>
   </connection>
@@ -970,50 +1067,34 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEdit</sender>
-   <signal>editingFinished()</signal>
-   <receiver>pushButton_4</receiver>
-   <slot>animateClick()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>92</x>
-     <y>42</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>335</x>
-     <y>47</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_5</sender>
+   <sender>pushButton_13</sender>
    <signal>clicked()</signal>
-   <receiver>textBrowser</receiver>
+   <receiver>textBrowser_2</receiver>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>531</x>
-     <y>268</y>
+     <x>492</x>
+     <y>264</y>
     </hint>
     <hint type="destinationlabel">
-     <x>490</x>
-     <y>212</y>
+     <x>495</x>
+     <y>245</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_6</sender>
+   <sender>pushButton_4</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>ClearVideoMem()</slot>
+   <slot>Go()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>548</x>
-     <y>263</y>
+     <x>356</x>
+     <y>52</y>
     </hint>
     <hint type="destinationlabel">
-     <x>616</x>
-     <y>301</y>
+     <x>218</x>
+     <y>59</y>
     </hint>
    </hints>
   </connection>
@@ -1034,18 +1115,50 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_13</sender>
+   <sender>pushButton_6</sender>
    <signal>clicked()</signal>
-   <receiver>textBrowser_2</receiver>
+   <receiver>MainWindow</receiver>
+   <slot>ClearVideoMem()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>548</x>
+     <y>263</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>616</x>
+     <y>301</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_5</sender>
+   <signal>clicked()</signal>
+   <receiver>textBrowser</receiver>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>492</x>
-     <y>264</y>
+     <x>531</x>
+     <y>268</y>
     </hint>
     <hint type="destinationlabel">
-     <x>495</x>
-     <y>245</y>
+     <x>490</x>
+     <y>212</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tableWidget_3</sender>
+   <signal>cellChanged(int,int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>EditReg(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>482</x>
+     <y>329</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>426</y>
     </hint>
    </hints>
   </connection>

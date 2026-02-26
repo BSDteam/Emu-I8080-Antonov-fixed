@@ -19,6 +19,8 @@
 #include "instrdelegate.h"
 #include "codedelegate.h"
 
+#include "VSCharEncoder.h"
+
 
 namespace Ui {
 class MainWindow;
