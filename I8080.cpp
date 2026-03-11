@@ -1736,11 +1736,7 @@ int MICROPROC::alu(unsigned char code)
           }break;
     //cpi
     case 0xFE: {
-      if (A==memory[++IP])
-          flag.Z=1;
-         else
-          if(A<memory[IP])
-              flag.C=1;
+         set_flags(A-memory[++IP]);
          IP++;
            }break;
     //rst 56
@@ -1762,7 +1758,8 @@ int MICROPROC::alu(unsigned char code)
    if((RgTimer!=0)&&(t-time(NULL)<0))
    {
      time_t t1=time(NULL);
-     RgTimer=RgTimer-(unsigned char)(t1-t);
+     if (RgTimer < t1-t) RgTimer = 0;
+     else RgTimer=RgTimer-(unsigned char)(t1-t);
      t=t1;
    }
 
